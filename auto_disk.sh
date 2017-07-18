@@ -6,13 +6,13 @@ if [ $1 != "" ];then
 	setup_path=$1;
 fi
 echo "
-+--------------------------------------------------------------------------
-|          Automatic disk partitioning tool 自动挂载数据盘脚本
-+--------------------------------------------------------------------------
-| Auto mount partition disk to $setup_path 自动挂载数据盘脚本到 $setup_path
-+--------------------------------------------------------------------------
-|                       蜗牛789——www.wn789.com
-+--------------------------------------------------------------------------
++----------------------------------------------------------------------
+| Bt-WebPanel Automatic disk partitioning tool
++----------------------------------------------------------------------
+| Copyright © 2015-2017 BT-SOFT(http://www.bt.cn) All rights reserved.
++----------------------------------------------------------------------
+| Auto mount partition disk to $setup_path
++----------------------------------------------------------------------
 "
 
 
@@ -103,7 +103,7 @@ EOF
 
 while [ "$go" != 'y' ] && [ "$go" != 'n' ]
 do
-	read -p "你想尝试安装数据盘至 $setup_path 目录吗？Do you want to try to mount the data disk to the $setup_path directory?(y/n): " go;
+	read -p "你想尝试挂载数据盘至 $setup_path 目录吗？Do you want to try to mount the data disk to the $setup_path directory?(y/n): " go;
 done
 
 if [ "$go" = 'n' ];then
