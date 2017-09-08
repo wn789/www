@@ -1,6 +1,7 @@
 #!/bin/bash
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
+LANG=en_US.UTF-8
 setup_path=/www
 if [ $1 != "" ];then
 	setup_path=$1;
@@ -19,8 +20,7 @@ echo "
 
 
 if [ -d $setup_path ];then
-	echo "Error: The $setup_path directory already exists."
-	echo "错误：$setup_path 目录已经存在。"
+	echo "错误：$setup_path 目录已经存在."
 	exit;
 fi
 
@@ -32,15 +32,13 @@ fdiskP(){
 		#判断指定目录是否被挂载
 		isR=`df -P|grep $setup_path`
 		if [ "$isR" != "" ];then
-			echo "Error: The $setup_path directory has been mounted."
-			echo "错误：$setup_path 目录已安装。"
+			echo "Error: 错误：$setup_path 目录已安装。The $setup_path directory has been mounted."
 			return;
 		fi
 		
 		isM=`df -P|grep '/dev/${i}1'`
 		if [ "$isM" != "" ];then
 			echo "/dev/${i}1 has been mounted."
-			echo "/dev/${i}1 已安装。"
 			continue;
 		fi
 			
@@ -74,8 +72,7 @@ EOF
 			#判断是否存在Windows磁盘分区
 			isN=`fdisk -l /dev/$i|grep -v 'bytes'|grep -v "NTFS"|grep -v "FAT32"`
 			if [ "$isN" = "" ];then
-				echo 'Warning: The Windows partition was detected. For your data security, Mount manually.';
-				echo '警告：检测到Windows分区。为您的数据安全，请手动安装。';
+				echo '警告：检测到Windows分区。为您的数据安全，请手动安装。Warning: The Windows partition was detected. For your data security, Mount manually.';
 				return;
 			fi
 			
