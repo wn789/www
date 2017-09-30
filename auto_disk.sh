@@ -240,9 +240,15 @@ if [ -f "/etc/init.d/bt" ] && [ -f "/www/server/panel/main.pyc" ]; then
 		stop_service
 		mv /www /bt-backup
 		fdiskP
+		echo -e "move disk..."
+		echo -e "迁移数据中..."
 		\cp -r -p -a /bt-backup/* /www
 		start_service
+		echo -e "done"
+		echo -e "迁移完成"
 	fi
 else
 	fdiskP
+	echo -e "done"
+	echo -e "挂载成功"
 fi
