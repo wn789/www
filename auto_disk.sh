@@ -6,6 +6,21 @@ setup_path=/www
 #if [ $1 != "" ];then
 	#setup_path=$1;
 #fi
+sysDisk=`cat /proc/partitions|grep -v name|grep -v ram|awk '{print $4}'|grep -v '^$'|grep -v '[0-9]$'|grep -v 'vda'|grep -v 'xvda'|grep -v 'sda'|grep -e 'vd' -e 'sd' -e 'xvd'`
+if [ "${sysDisk}" == "" ]; then
+	echo -e "ERROR!This server has only one hard drive,exit"
+	echo -e "此服务器只有一块磁盘,无法挂载"
+	echo -e "Bye-bye"
+	exit;
+fi
+mountDisk=`df -h | awk '{print $6}' |grep www`
+if [ "${mountDisk}" != "" ]; then
+	echo -e "www directory has been mounted,exit"
+	echo -e "www目录已被挂载,不执行任何操作"
+	echo -e "Bye-bye"
+	exit;
+fi
+
 echo "
 +----------------------------------------------------------------------
 | Bt-WebPanel Automatic disk partitioning tool
@@ -96,61 +111,61 @@ stop_service(){
 	/etc/init.d/bt stop
 
 	if [ -f "/etc/init.d/nginx" ]; then
-		/etc/init.d/nginx stop
+		/etc/init.d/nginx stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/httpd" ]; then
-		/etc/init.d/httpd stop
+		/etc/init.d/httpd stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/mysqld" ]; then
-		/etc/init.d/mysqld stop
+		/etc/init.d/mysqld stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/pure-ftpd" ]; then
-		/etc/init.d/pure-ftpd stop
+		/etc/init.d/pure-ftpd stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/tomcat" ]; then
-		/etc/init.d/tomcat stop
+		/etc/init.d/tomcat stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/redis" ]; then
-		/etc/init.d/redis stop
+		/etc/init.d/redis stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/memcached" ]; then
-		/etc/init.d/memcached stop
+		/etc/init.d/memcached stop > /dev/null 2>&1
 	fi
 
 	if [ -f "/www/server/panel/data/502Task.pl" ]; then
 		rm -f /www/server/panel/data/502Task.pl
 		if [ -f "/etc/init.d/php-fpm-52" ]; then
-			/etc/init.d/php-fpm-52 stop
+			/etc/init.d/php-fpm-52 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-53" ]; then
-			/etc/init.d/php-fpm-53 stop
+			/etc/init.d/php-fpm-53 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-54" ]; then
-			/etc/init.d/php-fpm-54 stop
+			/etc/init.d/php-fpm-54 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-55" ]; then
-			/etc/init.d/php-fpm-55 stop
+			/etc/init.d/php-fpm-55 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-56" ]; then
-			/etc/init.d/php-fpm-56 stop
+			/etc/init.d/php-fpm-56 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-70" ]; then
-			/etc/init.d/php-fpm-70 stop
+			/etc/init.d/php-fpm-70 stop > /dev/null 2>&1
 		fi
 
 		if [ -f "/etc/init.d/php-fpm-71" ]; then
-			/etc/init.d/php-fpm-71 stop
+			/etc/init.d/php-fpm-71 stop > /dev/null 2>&1
 		fi
 	fi
 }
@@ -160,59 +175,59 @@ start_service()
 	/etc/init.d/bt start
 
 	if [ -f "/etc/init.d/nginx" ]; then
-		/etc/init.d/nginx start
+		/etc/init.d/nginx start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/httpd" ]; then
-		/etc/init.d/httpd start
+		/etc/init.d/httpd start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/mysqld" ]; then
-		/etc/init.d/mysqld start
+		/etc/init.d/mysqld start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/pure-ftpd" ]; then
-		/etc/init.d/pure-ftpd start
+		/etc/init.d/pure-ftpd start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/tomcat" ]; then
-		/etc/init.d/tomcat start
+		/etc/init.d/tomcat start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/redis" ]; then
-		/etc/init.d/redis start
+		/etc/init.d/redis start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/memcached" ]; then
-		/etc/init.d/memcached start
+		/etc/init.d/memcached start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-52" ]; then
-		/etc/init.d/php-fpm-52 start
+		/etc/init.d/php-fpm-52 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-53" ]; then
-		/etc/init.d/php-fpm-53 start
+		/etc/init.d/php-fpm-53 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-54" ]; then
-		/etc/init.d/php-fpm-54 start
+		/etc/init.d/php-fpm-54 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-55" ]; then
-		/etc/init.d/php-fpm-55 start
+		/etc/init.d/php-fpm-55 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-56" ]; then
-		/etc/init.d/php-fpm-56 start
+		/etc/init.d/php-fpm-56 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-70" ]; then
-		/etc/init.d/php-fpm-70 start
+		/etc/init.d/php-fpm-70 start > /dev/null 2>&1
 	fi
 
 	if [ -f "/etc/init.d/php-fpm-71" ]; then
-		/etc/init.d/php-fpm-71 start
+		/etc/init.d/php-fpm-71 start > /dev/null 2>&1
 	fi
 
 	echo "True" > /www/server/panel/data/502Task.pl
@@ -224,6 +239,7 @@ do
 done
 
 if [ "$go" = 'n' ];then
+	echo -e "Bye-bye"
 	exit;
 fi
 
@@ -233,22 +249,39 @@ if [ -f "/etc/init.d/bt" ] && [ -f "/www/server/panel/main.pyc" ]; then
 	wwwUse=`du -sh -k /www|awk '{print $1}'`
 
 	if [ "${diskFree}" -lt "${wwwUse}" ]; then
-		echo -e "Sorry,your data disk is too small,can't copy to the www."
+		echo -e "Sorry,your data disk is too small,can't coxpy to the www."
 		echo -e "对不起，你的数据盘太小,无法迁移www目录数据到此数据盘"
 		exit;
 	else
+		echo -e ""
+		echo -e "stop bt-service"
+		echo -e "停止宝塔服务"
+		echo -e ""
+		sleep 3
 		stop_service
+		echo -e ""
 		mv /www /bt-backup
+		echo -e "disk partition..."
+		echo -e "磁盘分区..."
+		sleep 2
+		echo -e ""
 		fdiskP
+		echo -e ""
 		echo -e "move disk..."
 		echo -e "迁移数据中..."
 		\cp -r -p -a /bt-backup/* /www
-		start_service
-		echo -e "done"
+		echo -e ""
+		echo -e "Done"
 		echo -e "迁移完成"
+		echo -e ""
+		echo -e "start bt-service"
+		echo -e "启动宝塔服务"
+		echo -e ""
+		start_service
 	fi
 else
 	fdiskP
-	echo -e "done"
+	echo -e ""
+	echo -e "Done"
 	echo -e "挂载成功"
 fi
