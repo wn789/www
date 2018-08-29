@@ -6,6 +6,8 @@ setup_path=/www
 #if [ $1 != "" ];then
 	#setup_path=$1;
 #fi
+
+#检测磁盘数量
 sysDisk=`cat /proc/partitions|grep -v name|grep -v ram|awk '{print $4}'|grep -v '^$'|grep -v '[0-9]$'|grep -v 'vda'|grep -v 'xvda'|grep -v 'sda'|grep -e 'vd' -e 'sd' -e 'xvd'`
 if [ "${sysDisk}" == "" ]; then
 	echo -e "ERROR!This server has only one hard drive,exit"
@@ -13,6 +15,7 @@ if [ "${sysDisk}" == "" ]; then
 	echo -e "Bye-bye"
 	exit;
 fi
+#检测/www目录是否已挂载磁盘
 mountDisk=`df -h | awk '{print $6}' |grep www`
 if [ "${mountDisk}" != "" ]; then
 	echo -e "www directory has been mounted,exit"
@@ -20,7 +23,13 @@ if [ "${mountDisk}" != "" ]; then
 	echo -e "Bye-bye"
 	exit;
 fi
-
+#检测是否有windows分区
+winDisk=`fdisk -l |grep "NTFS\|FAT32"`
+if [ "${winDisk}" != "" ];then
+	echo 'Warning: The Windows partition was detected. For your data security, Mount manually.';
+	echo "危险 数据盘为windwos分区，为了你的数据安全，请手动挂载，本脚本不执行任何操作。"
+	exit;
+fi
 echo "
 +----------------------------------------------------------------------
 | Bt-WebPanel Automatic disk partitioning tool
